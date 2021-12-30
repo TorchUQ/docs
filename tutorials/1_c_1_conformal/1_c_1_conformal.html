@@ -1,87 +1,203 @@
-<!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<!doctype html>
+<html class="no-js">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="Tutorial 2.a: Representing and Evaluating Uncertainty for Classification" href="../2_a_representation/2_a_representation.html" /><link rel="prev" title="Tutorial 1.b: Learning Uncertainty Representations from Data with Gradient Descent" href="../1_b_learning/1_b_learning.html" />
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tutorial 1.c.1 Conformal (Interval) Prediction: From any Prediction to Valid Intervals &mdash; torchuq  documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
+    <meta name="generator" content="sphinx-4.3.0, furo 2021.11.23"/>
+        <title>Tutorial 1.c.1 Conformal (Interval) Prediction: From any Prediction to Valid Intervals - TorchUQ Documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=7f0192ddeb2adecfbaa87ffbcf67d16358b30bc1" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=0af69da206d614734f649b27d4cdc2dd6c31f41d" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/jquery.js"></script>
-        <script src="../../_static/underscore.js"></script>
-        <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="../../genindex.html" />
-    <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Tutorial 2.a: Representing and Evaluating Uncertainty for Classification" href="../2_a_representation/2_a_representation.html" />
-    <link rel="prev" title="Tutorial 1.b: Learning Uncertainty Representations from Data with Gradient Descent" href="../1_b_learning/1_b_learning.html" /> 
-</head>
+  }
+  body[data-theme="dark"] {
+    --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+  }
+  @media (prefers-color-scheme: dark) {
+    body:not([data-theme="light"]) {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+  }
+</style></head>
+  <body>
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" />
+      <line x1="4" y1="6" x2="20" y2="6" />
+      <line x1="10" y1="12" x2="20" y2="12" />
+      <line x1="6" y1="18" x2="20" y2="18" />
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
 
-<body class="wy-body-for-nav"> 
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-            <a href="../../index.html" class="icon icon-home"> torchuq
-          </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul class="current">
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">TorchUQ Documentation</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+  <span class="sidebar-brand-text">TorchUQ Documentation</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../quick_start.html">Quick Start</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../overview.html">Overview</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../api_reference/index.html">API Reference</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Tutorials</a><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="../1_a_representation/1_a_representation.html">Tutorial 1.a: Representing and Evaluating Uncertainty for Regression</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../1_b_learning/1_b_learning.html">Tutorial 1.b: Learning Uncertainty Representations from Data with Gradient Descent</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Tutorial 1.c.1 Conformal (Interval) Prediction: From any Prediction to Valid Intervals</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#offline-conformal-prediction">1. Offline Conformal Prediction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#online-conformal-prediction">2. Online Conformal Prediction</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../api_reference/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api_reference/evaluate.html">torchuq.evaluate Subpackage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../api_reference/dataset.html">torchuq.dataset Subpackage</a></li>
 </ul>
 </li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Tutorials</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="../1_a_representation/1_a_representation.html">Tutorial 1.a: Representing and Evaluating Uncertainty for Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../1_b_learning/1_b_learning.html">Tutorial 1.b: Learning Uncertainty Representations from Data with Gradient Descent</a></li>
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">Tutorial 1.c.1 Conformal (Interval) Prediction: From any Prediction to Valid Intervals</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2_a_representation/2_a_representation.html">Tutorial 2.a: Representing and Evaluating Uncertainty for Classification</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../2_b_calibrate/2_b_calibrate.html">Tutorial 2.b: Learning Calibrated Probabilities: The Basics</a></li>
 </ul>
 </li>
 </ul>
 
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../../index.html">torchuq</a>
-      </nav>
-
-      <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
-          <li><a href="../index.html">Tutorials</a> &raquo;</li>
-      <li>Tutorial 1.c.1 Conformal (Interval) Prediction: From any Prediction to Valid Intervals</li>
-      <li class="wy-breadcrumbs-aside">
-            <a href="../../_sources/tutorials/1_c_1_conformal/1_c_1_conformal.rst.txt" rel="nofollow"> View page source</a>
-      </li>
-  </ul>
-  <hr/>
 </div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="tutorial-1-c-1-conformal-interval-prediction-from-any-prediction-to-valid-intervals">
+</div>
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="tutorial-1-c-1-conformal-interval-prediction-from-any-prediction-to-valid-intervals">
 <h1>Tutorial 1.c.1 Conformal (Interval) Prediction: From any Prediction to Valid Intervals<a class="headerlink" href="#tutorial-1-c-1-conformal-interval-prediction-from-any-prediction-to-valid-intervals" title="Permalink to this headline"></a></h1>
 <section id="offline-conformal-prediction">
 <h2>1. Offline Conformal Prediction<a class="headerlink" href="#offline-conformal-prediction" title="Permalink to this headline"></a></h2>
@@ -113,17 +229,17 @@ import it the class, as well as some test prediction data (same as
 tutorial 1.a).</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># As before we first setup the environment and load the test prediction</span>
 <span class="kn">import</span> <span class="nn">sys</span>
-<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;../..&#39;</span><span class="p">)</span>   <span class="c1"># Include the directory that contains the torchuq package</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">'../..'</span><span class="p">)</span>   <span class="c1"># Include the directory that contains the torchuq package</span>
 <span class="kn">import</span> <span class="nn">torch</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
 
-<span class="n">reader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;pretrained/boston_pretrained.tar&#39;</span><span class="p">)</span>  <span class="c1"># Load the pretrained predictions</span>
+<span class="n">reader</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">'pretrained/boston_pretrained.tar'</span><span class="p">)</span>  <span class="c1"># Load the pretrained predictions</span>
 
 <span class="c1"># Split the data into validation and test, in this example we will use quantile predictions as the original predictions</span>
-<span class="n">val_preds</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">&#39;predictions_quantile&#39;</span><span class="p">][:</span><span class="mi">50</span><span class="p">]</span>
-<span class="n">val_labels</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">][:</span><span class="mi">50</span><span class="p">]</span>   <span class="c1"># Load the true label (i.e. the ground truth housing prices)</span>
-<span class="n">test_preds</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">&#39;predictions_quantile&#39;</span><span class="p">][</span><span class="mi">50</span><span class="p">:]</span>
-<span class="n">test_labels</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">][</span><span class="mi">50</span><span class="p">:]</span>  <span class="c1"># Used for testing</span>
+<span class="n">val_preds</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">'predictions_quantile'</span><span class="p">][:</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">val_labels</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">'labels'</span><span class="p">][:</span><span class="mi">50</span><span class="p">]</span>   <span class="c1"># Load the true label (i.e. the ground truth housing prices)</span>
+<span class="n">test_preds</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">'predictions_quantile'</span><span class="p">][</span><span class="mi">50</span><span class="p">:]</span>
+<span class="n">test_labels</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">'labels'</span><span class="p">][</span><span class="mi">50</span><span class="p">:]</span>  <span class="c1"># Used for testing</span>
 
 <span class="kn">from</span> <span class="nn">torchuq.transform.conformal</span> <span class="kn">import</span> <span class="n">ConformalIntervalPredictor</span>
 </pre></div>
@@ -142,7 +258,7 @@ validation labels</p></li>
 <code class="docutils literal notranslate"><span class="pre">test_intervals</span> <span class="pre">=</span> <span class="pre">ConformalIntervalPredictor.__call__(test_preds)</span></code>
 outputs the valid interval predictions</p></li>
 </ol>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calibrator</span> <span class="o">=</span> <span class="n">ConformalIntervalPredictor</span><span class="p">(</span><span class="n">input_type</span><span class="o">=</span><span class="s1">&#39;quantile&#39;</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="s1">&#39;exact&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calibrator</span> <span class="o">=</span> <span class="n">ConformalIntervalPredictor</span><span class="p">(</span><span class="n">input_type</span><span class="o">=</span><span class="s1">'quantile'</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="s1">'exact'</span><span class="p">)</span>
 <span class="n">calibrator</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">val_preds</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">)</span>
 <span class="n">test_intervals</span> <span class="o">=</span> <span class="n">calibrator</span><span class="p">(</span><span class="n">test_preds</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
 </pre></div>
@@ -156,41 +272,41 @@ only requires exchangeability).</p>
 <span class="n">interval</span><span class="o">.</span><span class="n">plot_interval_sequence</span><span class="p">(</span><span class="n">test_intervals</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="../../_images/output_6_01.png" src="../../_images/output_6_01.png" />
+<img alt="../../_images/output_6_01.png" src="../../_images/output_6_01.png"/>
 <p>There is an argument called <code class="docutils literal notranslate"><span class="pre">coverage</span></code> when creating the
 ConformalIntervalPredictor class. If you choose <code class="docutils literal notranslate"><span class="pre">coverage=exact</span></code> then
 the intervals have perfectly correct coverage in expectation (the
 probability that the label belongs to a predicted interval is <em>exactly</em>
 equal to <code class="docutils literal notranslate"><span class="pre">confidence</span></code>). If you choose <code class="docutils literal notranslate"><span class="pre">coverage=1/N</span></code> then the
-coverage is <img class="math" src="../../_images/math/76b20ffc6a2a339f7838adb421cf9107a1c78b9d.png" alt="0.9 \pm 1/N"/> where <img class="math" src="../../_images/math/3bfb3a64189a14b2704f4610827762d5e3145114.png" alt="N"/> is the number of
+coverage is <img alt="0.9 \pm 1/N" class="math" src="../../_images/math/76b20ffc6a2a339f7838adb421cf9107a1c78b9d.png"/> where <img alt="N" class="math" src="../../_images/math/3bfb3a64189a14b2704f4610827762d5e3145114.png"/> is the number of
 validation samples.</p>
 <p>What’s the trade-off? Typically you get smaller intervals if
 <code class="docutils literal notranslate"><span class="pre">coverage=1/N</span></code> compared to <code class="docutils literal notranslate"><span class="pre">coverage=exact</span></code>. For example, the
 following code uses <code class="docutils literal notranslate"><span class="pre">coverage=1/N</span></code> and the intervals are smaller. In
 fact, if you use <code class="docutils literal notranslate"><span class="pre">coverage=exact</span></code> and have less than <code class="docutils literal notranslate"><span class="pre">1/confidence</span></code>
 validation samples, the calibrator might predict an infinitely large
-interval and output <img class="math" src="../../_images/math/b9eeeb613a8b1b7c3928d2e606cf58313fc8fb32.png" alt="[-\infty, +\infty]"/>. On the other hand, if
+interval and output <img alt="[-\infty, +\infty]" class="math" src="../../_images/math/b9eeeb613a8b1b7c3928d2e606cf58313fc8fb32.png"/>. On the other hand, if
 you choose <code class="docutils literal notranslate"><span class="pre">coverage=1/N</span></code> then the calibrator will never predict an
 infinitely large interval.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calibrator</span> <span class="o">=</span> <span class="n">ConformalIntervalPredictor</span><span class="p">(</span><span class="n">input_type</span><span class="o">=</span><span class="s1">&#39;quantile&#39;</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="s1">&#39;1/N&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calibrator</span> <span class="o">=</span> <span class="n">ConformalIntervalPredictor</span><span class="p">(</span><span class="n">input_type</span><span class="o">=</span><span class="s1">'quantile'</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="s1">'1/N'</span><span class="p">)</span>
 <span class="n">calibrator</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">val_preds</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">)</span>
 <span class="n">test_intervals</span> <span class="o">=</span> <span class="n">calibrator</span><span class="p">(</span><span class="n">test_preds</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
 <span class="n">interval</span><span class="o">.</span><span class="n">plot_interval_sequence</span><span class="p">(</span><span class="n">test_intervals</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="../../_images/output_8_0.png" src="../../_images/output_8_0.png" />
+<img alt="../../_images/output_8_0.png" src="../../_images/output_8_0.png"/>
 <p>We used quantile predictions as an example. Note that we could use any
 prediction type as input. The following example uses point predictions</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Split the data into validation and test, in this example we will use quantile predictions as the original predictions</span>
-<span class="n">val_preds</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">&#39;predictions_point&#39;</span><span class="p">][:</span><span class="mi">50</span><span class="p">]</span>
-<span class="n">test_preds</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">&#39;predictions_point&#39;</span><span class="p">][</span><span class="mi">50</span><span class="p">:]</span>
-<span class="n">calibrator</span> <span class="o">=</span> <span class="n">ConformalIntervalPredictor</span><span class="p">(</span><span class="n">input_type</span><span class="o">=</span><span class="s1">&#39;point&#39;</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="s1">&#39;1/N&#39;</span><span class="p">)</span>   <span class="c1"># The only difference from before is that the input_type is different</span>
+<span class="n">val_preds</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">'predictions_point'</span><span class="p">][:</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">test_preds</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">'predictions_point'</span><span class="p">][</span><span class="mi">50</span><span class="p">:]</span>
+<span class="n">calibrator</span> <span class="o">=</span> <span class="n">ConformalIntervalPredictor</span><span class="p">(</span><span class="n">input_type</span><span class="o">=</span><span class="s1">'point'</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="s1">'1/N'</span><span class="p">)</span>   <span class="c1"># The only difference from before is that the input_type is different</span>
 <span class="n">calibrator</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">val_preds</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">)</span>
 <span class="n">test_intervals</span> <span class="o">=</span> <span class="n">calibrator</span><span class="p">(</span><span class="n">test_preds</span><span class="p">,</span> <span class="n">confidence</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
 <span class="n">interval</span><span class="o">.</span><span class="n">plot_interval_sequence</span><span class="p">(</span><span class="n">test_intervals</span><span class="p">,</span> <span class="n">test_labels</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="../../_images/output_10_0.png" src="../../_images/output_10_0.png" />
+<img alt="../../_images/output_10_0.png" src="../../_images/output_10_0.png"/>
 </section>
 <section id="online-conformal-prediction">
 <h2>2. Online Conformal Prediction<a class="headerlink" href="#online-conformal-prediction" title="Permalink to this headline"></a></h2>
@@ -205,10 +321,10 @@ almost identically as <code class="docutils literal notranslate"><span class="pr
 validation data, while <code class="docutils literal notranslate"><span class="pre">calibrator.train</span></code> removes all validation data
 and starts anew. The following example shows how to make online
 predictions.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calibrator</span> <span class="o">=</span> <span class="n">ConformalIntervalPredictor</span><span class="p">(</span><span class="n">input_type</span><span class="o">=</span><span class="s1">&#39;quantile&#39;</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="s1">&#39;exact&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calibrator</span> <span class="o">=</span> <span class="n">ConformalIntervalPredictor</span><span class="p">(</span><span class="n">input_type</span><span class="o">=</span><span class="s1">'quantile'</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="s1">'exact'</span><span class="p">)</span>
 
-<span class="n">val_preds</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">&#39;predictions_quantile&#39;</span><span class="p">][:</span><span class="mi">50</span><span class="p">]</span>
-<span class="n">val_labels</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">&#39;labels&#39;</span><span class="p">][:</span><span class="mi">50</span><span class="p">]</span>   <span class="c1"># Load the true label (i.e. the ground truth housing prices)</span>
+<span class="n">val_preds</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">'predictions_quantile'</span><span class="p">][:</span><span class="mi">50</span><span class="p">]</span>
+<span class="n">val_labels</span> <span class="o">=</span> <span class="n">reader</span><span class="p">[</span><span class="s1">'labels'</span><span class="p">][:</span><span class="mi">50</span><span class="p">]</span>   <span class="c1"># Load the true label (i.e. the ground truth housing prices)</span>
 
 <span class="k">def</span> <span class="nf">simulate_online</span><span class="p">(</span><span class="n">calibrator</span><span class="p">):</span>
     <span class="c1"># There needs to be at least 1 data point before making any prediction</span>
@@ -229,18 +345,18 @@ predictions.</p>
 <span class="n">interval</span><span class="o">.</span><span class="n">plot_interval_sequence</span><span class="p">(</span><span class="n">prediction_history</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">50</span><span class="p">])</span>
 </pre></div>
 </div>
-<img alt="../../_images/output_12_01.png" src="../../_images/output_12_01.png" />
+<img alt="../../_images/output_12_01.png" src="../../_images/output_12_01.png"/>
 <p>Notably initially when there are very few observed data points, the
 intervals are very large. This is because we selected
 <code class="docutils literal notranslate"><span class="pre">coverage='exact'</span></code>. If we do not require exact coverage then the
 interval sizes can be much smaller.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calibrator</span> <span class="o">=</span> <span class="n">ConformalIntervalPredictor</span><span class="p">(</span><span class="n">input_type</span><span class="o">=</span><span class="s1">&#39;quantile&#39;</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="s1">&#39;1/N&#39;</span><span class="p">)</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calibrator</span> <span class="o">=</span> <span class="n">ConformalIntervalPredictor</span><span class="p">(</span><span class="n">input_type</span><span class="o">=</span><span class="s1">'quantile'</span><span class="p">,</span> <span class="n">coverage</span><span class="o">=</span><span class="s1">'1/N'</span><span class="p">)</span>
 
 <span class="n">prediction_history</span> <span class="o">=</span> <span class="n">simulate_online</span><span class="p">(</span><span class="n">calibrator</span><span class="p">)</span>
 <span class="n">interval</span><span class="o">.</span><span class="n">plot_interval_sequence</span><span class="p">(</span><span class="n">prediction_history</span><span class="p">,</span> <span class="n">val_labels</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="mi">50</span><span class="p">])</span>
 </pre></div>
 </div>
-<img alt="../../_images/output_14_01.png" src="../../_images/output_14_01.png" />
+<img alt="../../_images/output_14_01.png" src="../../_images/output_14_01.png"/>
 <p>In fact, torchuq supports even more general prediction problems. For
 example, we might make a prediction for the weather 7 days from today.
 We will only observe the true label after 7 predictions. This is often
@@ -249,35 +365,75 @@ calling the <code class="docutils literal notranslate"><span class="pre">calibra
 </section>
 </section>
 
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="../2_a_representation/2_a_representation.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Tutorial 2.a: Representing and Evaluating Uncertainty for Classification</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../1_b_learning/1_b_learning.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Tutorial 1.b: Learning Uncertainty Representations from Data with Gradient Descent</div>
+                
+              </div>
+            </a>
+        </div>
 
-           </div>
-          </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../1_b_learning/1_b_learning.html" class="btn btn-neutral float-left" title="Tutorial 1.b: Learning Uncertainty Representations from Data with Gradient Descent" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="../2_a_representation/2_a_representation.html" class="btn btn-neutral float-right" title="Tutorial 2.a: Representing and Evaluating Uncertainty for Classification" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <div class="related-information">
+              Copyright &#169; 2021, torchuq team |
+          Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+          <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
+            | <a class="muted-link" href="../../_sources/tutorials/1_c_1_conformal/1_c_1_conformal.rst.txt"
+               rel="nofollow">
+              Show Source
+            </a>
+        </div>
+        
+      </footer>
     </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Tutorial 1.c.1 Conformal (Interval) Prediction: From any Prediction to Valid Intervals</a><ul>
+<li><a class="reference internal" href="#offline-conformal-prediction">1. Offline Conformal Prediction</a></li>
+<li><a class="reference internal" href="#online-conformal-prediction">2. Online Conformal Prediction</a></li>
+</ul>
+</li>
+</ul>
 
-  <hr/>
-
-  <div role="contentinfo">
-    <p>&#169; Copyright 2021, torchuq team.</p>
-  </div>
-
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
-
-</footer>
+          </div>
         </div>
       </div>
-    </section>
+      
+      
+    </aside>
   </div>
-  <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script> 
-
-</body>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    </body>
 </html>
