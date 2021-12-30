@@ -198,7 +198,7 @@
         </div>
         <article role="main">
           <section id="tutorial-2-b-learning-calibrated-probabilities-the-basics">
-<h1>Tutorial 2.b: Learning Calibrated Probabilities: The Basics<a class="headerlink" href="#tutorial-2-b-learning-calibrated-probabilities-the-basics" title="Permalink to this headline"></a></h1>
+<h1>Tutorial 2.b: Learning Calibrated Probabilities: The Basics<a class="headerlink" href="#tutorial-2-b-learning-calibrated-probabilities-the-basics" title="Permalink to this headline">¶</a></h1>
 <p>Calibration is a basic requirement for probabilistic predictions.
 However, many classification models are not intrinsically
 well-calibrated. Thus, there exist several methods that apply a
@@ -233,9 +233,9 @@ currently supported algorithms:</p>
 <li><p>Advanced calibration methods: Decision calibration</p></li>
 </ul>
 <section id="standard-calibration-methods">
-<h2>Standard Calibration Methods<a class="headerlink" href="#standard-calibration-methods" title="Permalink to this headline"></a></h2>
+<h2>Standard Calibration Methods<a class="headerlink" href="#standard-calibration-methods" title="Permalink to this headline">¶</a></h2>
 <section id="temperature-scaling">
-<h3>Temperature Scaling<a class="headerlink" href="#temperature-scaling" title="Permalink to this headline"></a></h3>
+<h3>Temperature Scaling<a class="headerlink" href="#temperature-scaling" title="Permalink to this headline">¶</a></h3>
 <p>Temperature scaling is a recalibration method for neural networks that
 learns a single temperature parameter and rescales the confidence scores
 for all samples simultaneously.</p>
@@ -296,7 +296,7 @@ recalibrated predictions</p></li>
 <img alt="../../_images/output_10_01.png" src="../../_images/output_10_01.png"/>
 </section>
 <section id="histogram-binning">
-<h3>Histogram Binning<a class="headerlink" href="#histogram-binning" title="Permalink to this headline"></a></h3>
+<h3>Histogram Binning<a class="headerlink" href="#histogram-binning" title="Permalink to this headline">¶</a></h3>
 <p>Histogram binning is another popular recalibration method for
 classification models. Histogram binning partitions the confidence
 scores into bins
@@ -327,7 +327,7 @@ visualized reliability diagram.</p>
 </section>
 </section>
 <section id="classwise-calibration-methods">
-<h2>Classwise Calibration Methods<a class="headerlink" href="#classwise-calibration-methods" title="Permalink to this headline"></a></h2>
+<h2>Classwise Calibration Methods<a class="headerlink" href="#classwise-calibration-methods" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes, overall confidence calibration is insufficient. In many
 applications, we may instead want to achieve the stronger notion of
 <em>classwise</em> calibration. Classwise calibration groups samples by their
@@ -335,7 +335,7 @@ true class label, and considers the ECE within each class; this may be
 useful (for instance) for ensuring that different groups are similarly
 well calibrated.</p>
 <section id="dirichlet-calibration">
-<h3>Dirichlet Calibration<a class="headerlink" href="#dirichlet-calibration" title="Permalink to this headline"></a></h3>
+<h3>Dirichlet Calibration<a class="headerlink" href="#dirichlet-calibration" title="Permalink to this headline">¶</a></h3>
 <p>One method for achieving classwise calibration is Dirichlet calibration
 [2]. This method learns a calibration map that transforms the predicted
 probabilities based on a Dirichlet probability distribution. In neural
@@ -371,14 +371,14 @@ activation.</p>
 </section>
 </section>
 <section id="advanced-calibration-methods">
-<h2>Advanced Calibration Methods<a class="headerlink" href="#advanced-calibration-methods" title="Permalink to this headline"></a></h2>
+<h2>Advanced Calibration Methods<a class="headerlink" href="#advanced-calibration-methods" title="Permalink to this headline">¶</a></h2>
 <section id="decision-calibration">
-<h3>Decision Calibration<a class="headerlink" href="#decision-calibration" title="Permalink to this headline"></a></h3>
+<h3>Decision Calibration<a class="headerlink" href="#decision-calibration" title="Permalink to this headline">¶</a></h3>
 <p>[TBD]</p>
 </section>
 </section>
 <section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <p>[1] Chuan Guo, Geoff Pleiss, Yu Sun, and Kilian Weinberger. “On
 Calibration of Modern Neural Networks.” International Conference on
 Machine Learning (2017).</p>
@@ -409,7 +409,7 @@ NeurIPS (2019).</p>
         </div>
 
         <div class="related-information">
-              Copyright &#169; 2021, torchuq team |
+              Copyright &#169; 2021, TorchUQ team |
           Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
           <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
             | <a class="muted-link" href="../../_sources/tutorials/2_b_calibrate/2_b_calibrate.rst.txt"

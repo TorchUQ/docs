@@ -198,7 +198,7 @@
         </div>
         <article role="main">
           <section id="tutorial-1-b-learning-uncertainty-representations-from-data-with-gradient-descent">
-<h1>Tutorial 1.b: Learning Uncertainty Representations from Data with Gradient Descent<a class="headerlink" href="#tutorial-1-b-learning-uncertainty-representations-from-data-with-gradient-descent" title="Permalink to this headline"></a></h1>
+<h1>Tutorial 1.b: Learning Uncertainty Representations from Data with Gradient Descent<a class="headerlink" href="#tutorial-1-b-learning-uncertainty-representations-from-data-with-gradient-descent" title="Permalink to this headline">¶</a></h1>
 <p>In the previous tutorial we demonstrated several types of predictions
 and metrics to measure their quality. Naturally, given a quality
 measurement we can also optimize the predictions to maximize the quality
@@ -212,7 +212,7 @@ directly used as objective functions and optimized with gradient
 descent. To see which metrics are differentiable see the reference list
 in [TBD].</p>
 <section id="setting-up-the-environment">
-<h2>Setting up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this headline"></a></h2>
+<h2>Setting up the Environment<a class="headerlink" href="#setting-up-the-environment" title="Permalink to this headline">¶</a></h2>
 <p>We first setup the environment of the tutorial. First load the necessary
 dependencies.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
@@ -279,7 +279,7 @@ neural network as the prediction function.</p>
 </div>
 </section>
 <section id="learning-probability-predictions">
-<h2>Learning Probability Predictions<a class="headerlink" href="#learning-probability-predictions" title="Permalink to this headline"></a></h2>
+<h2>Learning Probability Predictions<a class="headerlink" href="#learning-probability-predictions" title="Permalink to this headline">¶</a></h2>
 <p>We can define a probability prediction model by mapping each input to
 the parameters of a distribution family (such as Gaussians). For
 example, the following code defines a prediction model that outputs
@@ -349,7 +349,7 @@ tutorial.</p>
 <img alt="../../_images/output_12_1.png" src="../../_images/output_12_1.png"/>
 </section>
 <section id="learning-quantile-predictions">
-<h2>Learning Quantile Predictions<a class="headerlink" href="#learning-quantile-predictions" title="Permalink to this headline"></a></h2>
+<h2>Learning Quantile Predictions<a class="headerlink" href="#learning-quantile-predictions" title="Permalink to this headline">¶</a></h2>
 <p>Learning quantile predictions is very similar to learning distribution
 predictions. There are two differences: the prediction should have the
 correct shape <code class="docutils literal notranslate"><span class="pre">[batch_size,</span> <span class="pre">n_quantiles]</span></code> or
@@ -399,7 +399,7 @@ true quantiles.</p>
 <img alt="../../_images/output_15_0.png" src="../../_images/output_15_0.png"/>
 <img alt="../../_images/output_15_1.png" src="../../_images/output_15_1.png"/>
 <section id="using-torchuq-transforms-in-an-end-to-end-deep-learning-pipeline">
-<h3>Using Torchuq Transforms in an End-to-End Deep Learning Pipeline<a class="headerlink" href="#using-torchuq-transforms-in-an-end-to-end-deep-learning-pipeline" title="Permalink to this headline"></a></h3>
+<h3>Using Torchuq Transforms in an End-to-End Deep Learning Pipeline<a class="headerlink" href="#using-torchuq-transforms-in-an-end-to-end-deep-learning-pipeline" title="Permalink to this headline">¶</a></h3>
 <p>One of the key functionality of Torchuq is <strong>transformation</strong>,
 i.e. converting a prediction into a different prediction. For example, a
 simple transformation is to convert a distribution prediction into an
@@ -493,7 +493,7 @@ distribution prediction, and finally optimize a proper scoring rule
         </div>
 
         <div class="related-information">
-              Copyright &#169; 2021, torchuq team |
+              Copyright &#169; 2021, TorchUQ team |
           Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
           <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
             | <a class="muted-link" href="../../_sources/tutorials/1_b_learning/1_b_learning.rst.txt"

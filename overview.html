@@ -198,11 +198,11 @@
         </div>
         <article role="main">
           <section class="tex2jax_ignore mathjax_ignore" id="overview">
-<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline"></a></h1>
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
 <p>This page contains an overview of the design philosophy and usage of TorchUQ.</p>
 <p>The core of TorchUQ consists of the following three components: prediction types, evaluation metrics, and transformations.</p>
 <section id="prediction-types">
-<h2>1. Prediction types<a class="headerlink" href="#prediction-types" title="Permalink to this headline"></a></h2>
+<h2>1. Prediction types<a class="headerlink" href="#prediction-types" title="Permalink to this headline">¶</a></h2>
 <p>Before we start to work with any predictions we must think about how to represent our prediction. For example, when predicting the price of a house, we could represent it as a range, such as 120k-150k dollars, or we could represent it as a cumulative density function (CDF). TorchUQ supports around 10 different prediction types for regression and classification problems:</p>
 <ul class="simple">
 <li><p>For a list of types supported for regression problems, see [link]</p></li>
@@ -211,11 +211,11 @@
 <p>In the next major update, we intend to support additional prediction types, such as multi-variate predictions.</p>
 </section>
 <section id="evaluation-metrics">
-<h2>2. Evaluation Metrics<a class="headerlink" href="#evaluation-metrics" title="Permalink to this headline"></a></h2>
+<h2>2. Evaluation Metrics<a class="headerlink" href="#evaluation-metrics" title="Permalink to this headline">¶</a></h2>
 <p>Given a prediction, we will want to evaluate how good it is at capturing the ground truth. In TorchUQ all evaluation functions are in the <code class="docutils literal notranslate"><span class="pre">torchuq.evaluate</span></code>  sub-package, organized by prediction type. For example, functions that evaluate a categorical prediction are in the <code class="docutils literal notranslate"><span class="pre">torchuq.evaluate.categorical</span></code> sub-package, and functions that evaluate a distribution prediction are in the <code class="docutils literal notranslate"><span class="pre">torchuq.evaluate.distribution</span></code> sub-package.</p>
 <p>There are two ways to evaluate predictions: by computing a metric (such as the L2 loss or the log-likelihood), or by a visualization plot (such as the reliability diagram).</p>
 <section id="computing-a-metric">
-<h3>2.1 Computing a metric<a class="headerlink" href="#computing-a-metric" title="Permalink to this headline"></a></h3>
+<h3>2.1 Computing a metric<a class="headerlink" href="#computing-a-metric" title="Permalink to this headline">¶</a></h3>
 <p>These functions compute a evaluation metric (such as L2 loss or ECE error) on a batch of predictions. All metric computation functions take the following format</p>
 <p><code class="docutils literal notranslate"> <span class="pre">torchuq.evaluate.{prediction_type}.compute_{metirc_name}(predictions,</span> <span class="pre">labels,</span> <span class="pre">reduction='mean')</span></code></p>
 <p>For example, to compute the ECE of a categorical prediction, use</p>
@@ -228,7 +228,7 @@
 </ul>
 </section>
 <section id="make-a-plot">
-<h3>2.2 Make a plot<a class="headerlink" href="#make-a-plot" title="Permalink to this headline"></a></h3>
+<h3>2.2 Make a plot<a class="headerlink" href="#make-a-plot" title="Permalink to this headline">¶</a></h3>
 <p>These functions make a plot to visualize the quality of the batch of predictions.</p>
 <p><code class="docutils literal notranslate"> <span class="pre">torchuq.evaluate.{predition_type}.plot_{visualization_name}(predictions,</span> <span class="pre">labels,</span> <span class="pre">ax=None)</span></code></p>
 <p>For example, to compute the reliability diagram of a categorical prediction, use</p>
@@ -241,7 +241,7 @@
 </section>
 </section>
 <section id="transformations">
-<h2>3. Transformations<a class="headerlink" href="#transformations" title="Permalink to this headline"></a></h2>
+<h2>3. Transformations<a class="headerlink" href="#transformations" title="Permalink to this headline">¶</a></h2>
 <p>The final and key component of TorchUQ is transformation. We will want to transform low quality predictions (such as uncalibrated predictions) into new high quality predictions, usually with the help of some data.</p>
 <p>The main workhorse for transformation is the Calibrator abstract class, which defines a unified interface for an extremely large collection of calibration algorithms (including standard calibration algorithms, conformal prediction, decision calibration, multi-calibration, and many more).</p>
 <p><img alt="Calibration Illustration" src="_images/calibrator.png"/></p>
@@ -259,7 +259,7 @@
 </ol>
 <p>To use the learned calibrator to transform new data, simply run <code class="docutils literal notranslate"><span class="pre">Calibrator(new_prediction)</span></code>. Note that several calibrator can transform a prediction into a different type. For example, the <code class="docutils literal notranslate"><span class="pre">ConformalCalibrator</span></code> class takes as input an original prediction of any type, and outputs new predictions that are distributions.</p>
 <section id="example">
-<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline"></a></h3>
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
 <p>For example, to use temperature scaling to recalibrate a categorical prediction use</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">calibrator</span> <span class="o">=</span> <span class="n">TemperatureScaling</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">calibrator</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
@@ -268,19 +268,19 @@
 </div>
 </section>
 <section id="online-prediction">
-<h3>Online Prediction<a class="headerlink" href="#online-prediction" title="Permalink to this headline"></a></h3>
+<h3>Online Prediction<a class="headerlink" href="#online-prediction" title="Permalink to this headline">¶</a></h3>
 <p>Finally many algorithms can be used in the online prediction setup, where data becomes available in a sequential order and can be used to update the best predictor for future data. This is achieved by</p>
 <p><code class="docutils literal notranslate"><span class="pre">Calibrator.update(predictions,</span> <span class="pre">labels,</span> <span class="pre">side_feature=None)</span> </code></p>
 <p>This function works in the same way as <code class="docutils literal notranslate"><span class="pre">calibrator.train</span></code>—except that instead of training the calibrator from scratch, it updates the calibrator with the new data. For an online prediction example see [link].</p>
 </section>
 <section id="transformations-options">
-<h3>Transformations Options<a class="headerlink" href="#transformations-options" title="Permalink to this headline"></a></h3>
+<h3>Transformations Options<a class="headerlink" href="#transformations-options" title="Permalink to this headline">¶</a></h3>
 <p>While the above discussion concerns transformations with data, TorchUQ also supports
 direct transformations between types. For example, given a distribution prediction, we
 can take the 95% credible interval as an interval prediction. The follow tables show the
 options for direct transformations.</p>
 <section id="transformations-for-regression-prediction-types">
-<h4>Transformations for regression prediction types<a class="headerlink" href="#transformations-for-regression-prediction-types" title="Permalink to this headline"></a></h4>
+<h4>Transformations for regression prediction types<a class="headerlink" href="#transformations-for-regression-prediction-types" title="Permalink to this headline">¶</a></h4>
 <div class="table-wrapper"><table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="text-align:center head"><p></p></th>
@@ -338,7 +338,7 @@ options for direct transformations.</p>
 </table></div>
 </section>
 <section id="transformations-for-classification-prediction-types">
-<h4>Transformations for classification prediction types<a class="headerlink" href="#transformations-for-classification-prediction-types" title="Permalink to this headline"></a></h4>
+<h4>Transformations for classification prediction types<a class="headerlink" href="#transformations-for-classification-prediction-types" title="Permalink to this headline">¶</a></h4>
 <div class="table-wrapper"><table class="colwidths-auto docutils align-default">
 <thead>
 <tr class="row-odd"><th class="text-align:center head"><p></p></th>
@@ -403,7 +403,7 @@ options for direct transformations.</p>
         </div>
 
         <div class="related-information">
-              Copyright &#169; 2021, torchuq team |
+              Copyright &#169; 2021, TorchUQ team |
           Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
           <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
             | <a class="muted-link" href="_sources/overview.md.txt"

@@ -198,7 +198,7 @@
         </div>
         <article role="main">
           <section id="tutorial-1-a-representing-and-evaluating-uncertainty-for-regression">
-<h1>Tutorial 1.a: Representing and Evaluating Uncertainty for Regression<a class="headerlink" href="#tutorial-1-a-representing-and-evaluating-uncertainty-for-regression" title="Permalink to this headline"></a></h1>
+<h1>Tutorial 1.a: Representing and Evaluating Uncertainty for Regression<a class="headerlink" href="#tutorial-1-a-representing-and-evaluating-uncertainty-for-regression" title="Permalink to this headline">¶</a></h1>
 <p>This tutorial is the first in a series of tutorials on using torchuq for
 uncertainty quantification. If you haven’t already, you can read the
 <a class="reference external" href="https://github.com/TorchUQ/torchuq/tree/main/examples/tutorial/0_introduction.md">Introduction</a>
@@ -327,7 +327,7 @@ sequence of predictions on a dataset with <code class="docutils literal notransl
 Even if the dataset only contains 1 sample (i.e. <code class="docutils literal notranslate"><span class="pre">batch_size=1</span></code>), the
 predictions must be an array of shape <code class="docutils literal notranslate"><span class="pre">[1]</span></code> rather than a scalar.</p>
 <section id="running-example">
-<h2>Running example<a class="headerlink" href="#running-example" title="Permalink to this headline"></a></h2>
+<h2>Running example<a class="headerlink" href="#running-example" title="Permalink to this headline">¶</a></h2>
 <p>As a running example we will predict the housing prices on the Boston
 housing prices dataset. For convenience, we have pretrained a set of
 predictions. In the next chapters we will see how to use torchuq to
@@ -348,7 +348,7 @@ visualization.</p>
 </div>
 </section>
 <section id="point-predictions">
-<h2>1. Point Predictions<a class="headerlink" href="#point-predictions" title="Permalink to this headline"></a></h2>
+<h2>1. Point Predictions<a class="headerlink" href="#point-predictions" title="Permalink to this headline">¶</a></h2>
 <p>Point prediction is the simplest type of prediction, where we use a
 single number to represent the prediction. Point predictions are
 widespread because of their simplicity — a single number is easy to
@@ -452,7 +452,7 @@ many common scores.</p>
 </div>
 </section>
 <section id="distribution-predictions">
-<h2>2. Distribution Predictions<a class="headerlink" href="#distribution-predictions" title="Permalink to this headline"></a></h2>
+<h2>2. Distribution Predictions<a class="headerlink" href="#distribution-predictions" title="Permalink to this headline">¶</a></h2>
 <p>A distribution prediction is a cumulative distribution function (CDF)
 over the label, i.e. it is a function <img alt="f: \mathbb{R} \to [0, 1]" class="math" src="../../_images/math/ec1e16f8d553fd1aeb98e833ba3dce859047b7af.png"/>
 that is monotonic and upward continuous. Ideally, a distribution
@@ -608,7 +608,7 @@ predictions are not calibrated. We will discuss recalibration in a
 future tutorial.</p>
 </section>
 <section id="interval-predictions">
-<h2>3. Interval Predictions<a class="headerlink" href="#interval-predictions" title="Permalink to this headline"></a></h2>
+<h2>3. Interval Predictions<a class="headerlink" href="#interval-predictions" title="Permalink to this headline">¶</a></h2>
 <p>There are situations where some uncertainty quantification is needed
 (hence a point prediction is insuffient), but we do not want to learn a
 full cumulative distribution function. An interval prediction is a good
@@ -665,7 +665,7 @@ know how many proportion of the intervals have a size that’s less than
 <img alt="../../_images/output_27_1.png" src="../../_images/output_27_1.png"/>
 </section>
 <section id="quantile-predictions">
-<h2>4. Quantile Predictions<a class="headerlink" href="#quantile-predictions" title="Permalink to this headline"></a></h2>
+<h2>4. Quantile Predictions<a class="headerlink" href="#quantile-predictions" title="Permalink to this headline">¶</a></h2>
 <p>Similar to interval predictions, quantile predictions are most useful
 when some uncertainty quantification is needed (hence a point prediction
 is insuffient), but we do not want to learn a full cumulative
@@ -749,7 +749,7 @@ quantile predictions, a very important proper scoring rule is the
 </div>
 </section>
 <section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this headline"></a></h2>
+<h2>References<a class="headerlink" href="#references" title="Permalink to this headline">¶</a></h2>
 <p>[1] Gneiting, Tilmann. “Making and evaluating point forecasts.” Journal
 of the American Statistical Association 106, no. 494 (2011): 746-762.</p>
 <p>[2] Vovk, Vladimir, Alex Gammerman, and Glenn Shafer. Algorithmic
@@ -794,7 +794,7 @@ International Conference on Machine Learning, pp. 2796-2804. PMLR, 2018.</p>
         </div>
 
         <div class="related-information">
-              Copyright &#169; 2021, torchuq team |
+              Copyright &#169; 2021, TorchUQ team |
           Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
           <a href="https://github.com/pradyunsg/furo">Furo theme</a>.
             | <a class="muted-link" href="../../_sources/tutorials/1_a_representation/1_a_representation.rst.txt"
