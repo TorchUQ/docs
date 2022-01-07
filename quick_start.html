@@ -197,6 +197,7 @@
 <li class="toctree-l1 has-children"><a class="reference internal" href="api_reference/index.html">API Reference</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
 <li class="toctree-l2"><a class="reference internal" href="api_reference/evaluate.html">torchuq.evaluate Subpackage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="api_reference/dataset.html">torchuq.dataset Subpackage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference/transform.html">torchuq.transform Subpackage</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -235,9 +236,38 @@
         <article role="main">
           <section id="quick-start">
 <h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
-<p>Welcome to TorchUQ!</p>
-<p>This is a quick start tutorial which shows …</p>
-</section>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span><span class="o">,</span> <span class="nn">torchuq</span>
+<span class="kn">from</span> <span class="nn">torchuq.evaluate</span> <span class="kn">import</span> <span class="n">distribution</span>
+<span class="kn">from</span> <span class="nn">torchuq.transform.conformal</span> <span class="kn">import</span> <span class="n">ConformalCalibrator</span>
+<span class="kn">from</span> <span class="nn">torchuq.dataset</span> <span class="kn">import</span> <span class="n">create_example_regression</span>
+</pre></div>
+</div>
+<p>In this very simple example, we create a synthetic prediction (which is
+a set of Gaussian distributions), plot them, and recalibrate them with
+conformal calibration.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span> <span class="o">=</span> <span class="n">create_example_regression</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The example predictions are intentionally incorrect (i.e. the label is
+not drawn from the predictions). We will recalibrate the distribution
+with a powerful recalibration algorithm called conformal calibration. It
+takes as input the predictions and the labels, and learns a
+recalibration map that can be applied to new data (here for illustration
+purposes we apply it to the original data).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">calibrator</span> <span class="o">=</span> <span class="n">ConformalCalibrator</span><span class="p">(</span><span class="n">input_type</span><span class="o">=</span><span class="s1">'distribution'</span><span class="p">,</span> <span class="n">interpolation</span><span class="o">=</span><span class="s1">'linear'</span><span class="p">)</span>
+<span class="n">calibrator</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
+<span class="n">adjusted_predictions</span> <span class="o">=</span> <span class="n">calibrator</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>We can plot these distribution predictions as a sequence of density
+functions, and the labels as the cross-shaped markers. As shown by the
+plot, the original predictions have systematically incorrect variance
+and mean, which is fixed by the recalibration algorithm.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">distribution</span><span class="o">.</span><span class="n">plot_density_sequence</span><span class="p">(</span><span class="n">predictions</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">smooth_bw</span><span class="o">=</span><span class="mi">10</span><span class="p">);</span>
+<span class="n">distribution</span><span class="o">.</span><span class="n">plot_density_sequence</span><span class="p">(</span><span class="n">adjusted_predictions</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">smooth_bw</span><span class="o">=</span><span class="mi">10</span><span class="p">);</span>
+</pre></div>
+</div>
+<img alt="_images/quickstart_plot.svg" src="_images/quickstart_plot.svg"/><img alt="_images/quickstart_plot2.svg" src="_images/quickstart_plot2.svg"/></section>
 
         </article>
       </div>

@@ -197,6 +197,7 @@
 <li class="toctree-l1 current has-children"><a class="reference internal" href="index.html">API Reference</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
 <li class="toctree-l2 current current-page"><a class="current reference internal" href="#">torchuq.evaluate Subpackage</a></li>
 <li class="toctree-l2"><a class="reference internal" href="dataset.html">torchuq.dataset Subpackage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="transform.html">torchuq.transform Subpackage</a></li>
 </ul>
 </li>
 <li class="toctree-l1 has-children"><a class="reference internal" href="../tutorials/index.html">Tutorials</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
@@ -254,10 +255,10 @@ containing code for evaluating and visualizing predictions.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the CRPS score, an array with shape [batch_size] or shape [] depending on the reduction.</p>
+<dd class="field-even"><p>The CRPS score, when reduction is ‘none’ the shape is [batch_size], otherwise the shape is [].</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tensor</p>
+<dd class="field-odd"><p>tensor with shape [batch_size] or []</p>
 </dd>
 </dl>
 </dd></dl>
@@ -265,29 +266,27 @@ containing code for evaluating and visualizing predictions.</p>
 <dt class="sig sig-object py" id="torchuq.evaluate.distribution.compute_ece">
 <span class="sig-prename descclassname"><span class="pre">torchuq.evaluate.distribution.</span></span><span class="sig-name descname"><span class="pre">compute_ece</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">debiased</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchuq.evaluate.distribution.compute_ece" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute the (weighted) ECE score as in <a class="reference external" href="https://arxiv.org/abs/1807.00263">https://arxiv.org/abs/1807.00263</a>.</p>
-<p>Note that this function has biased gradient because of the non-differentiable nature of sorting.</p>
+<p>Note that this function has biased gradients because of non-differentiable sorting.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>predictions</strong> (<em>labels are truely drawn from the</em>) – a batch of distribution predictions.</p></li>
+<li><p><strong>predictions</strong> (<em>distribution</em>) – a batch of distribution predictions.</p></li>
 <li><p><strong>labels</strong> (<em>tensor</em>) – array [batch_size] of labels.</p></li>
-<li><p><strong>debiased</strong> (<em>bool</em>) – if debiased=True then the finite sample bias is removed. If the</p></li>
-<li><p><strong>predictions</strong> – </p></li>
-<li><p><strong>0.</strong> (<em>the this function will in expectation return</em>) – </p></li>
+<li><p><strong>debiased</strong> (<em>bool</em>) – if True then the estimation bias is deducted: if the predictions are perfectly calibrated, then this function in expectation returns 0.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the ECE score, which is an scalar array (array of shape []).</p>
+<dd class="field-even"><p>The ECE score.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tensor</p>
+<dd class="field-odd"><p>tensor with shape []</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="torchuq.evaluate.distribution.compute_mean">
 <span class="sig-prename descclassname"><span class="pre">torchuq.evaluate.distribution.</span></span><span class="sig-name descname"><span class="pre">compute_mean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchuq.evaluate.distribution.compute_mean" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the mean of the predictions.</p>
+<dd><p>Compute the mean of the distribution predictions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -297,10 +296,10 @@ containing code for evaluating and visualizing predictions.</p>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the computed mean, array [batch_size] or array [] depending on the reduction.</p>
+<dd class="field-even"><p>The computed mean, when reduction is ‘none’ the shape is [batch_size], otherwise the shape is [].</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tensor</p>
+<dd class="field-odd"><p>tensor with shape [batch_size] or []</p>
 </dd>
 </dl>
 </dd></dl>
@@ -313,22 +312,21 @@ containing code for evaluating and visualizing predictions.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>predictions</strong> (<em>distribution</em>) – a batch of distribution predictions.</p></li>
 <li><p><strong>reduction</strong> (<em>str</em>) – the method to aggregate the results across the batch. Can be ‘none’, ‘mean’, ‘sum’, ‘median’, ‘min’, or ‘max’.</p></li>
-<li><p><strong>resolution</strong> – the number of discretization bins, where higher resolution increases estimation accuracy but also requires more memory/compute.</p></li>
+<li><p><strong>resolution</strong> (<em>int</em>) – the number of discretization bins, where higher resolution increases estimation accuracy but also requires more memory/compute.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the computed mean, array [batch_size] or array [] depending on the reduction.
-tensor: the computed standard deviation, array [batch_size] or array [] depending on the reduction.</p>
+<dd class="field-even"><p>The mean and the standard deviation. When reduction is ‘none’ the shape is [batch_size], otherwise the shape is [].</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tensor</p>
+<dd class="field-odd"><p>tuple of two tensors with shape [batch_size] or []</p>
 </dd>
 </dl>
 </dd></dl>
 <dl class="py function">
 <dt class="sig sig-object py" id="torchuq.evaluate.distribution.compute_std">
 <span class="sig-prename descclassname"><span class="pre">torchuq.evaluate.distribution.</span></span><span class="sig-name descname"><span class="pre">compute_std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">predictions</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reduction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mean'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#torchuq.evaluate.distribution.compute_std" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute the standard deviation of the predictions.</p>
+<dd><p>Compute the standard deviation of the distribution predictions.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
@@ -338,10 +336,10 @@ tensor: the computed standard deviation, array [batch_size] or array [] dependin
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the standard deviation, array [batch_size] or array [], the standard deviation.</p>
+<dd class="field-even"><p>The standard deviation, when reduction is ‘none’ the shape is [batch_size], otherwise the shape is [].</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tensor</p>
+<dd class="field-odd"><p>tensor with shape [batch_size] or []</p>
 </dd>
 </dl>
 </dd></dl>
@@ -353,7 +351,7 @@ tensor: the computed standard deviation, array [batch_size] or array [] dependin
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>predictions</strong> (<em>distribution</em>) – a batch of distribution predictions.</p></li>
-<li><p><strong>labels</strong> (<em>tensor</em>) – the labels.</p></li>
+<li><p><strong>labels</strong> (<em>tensor with shape</em><em> [</em><em>batch_size</em><em>]</em>) – the true labels. If None the true labels are not plotted.</p></li>
 <li><p><strong>ax</strong> (<em>axes</em>) – the axes to plot the figure on, if None automatically creates a figure with recommended size.</p></li>
 <li><p><strong>max_count</strong> (<em>int</em>) – the maximum number of CDFs to plot.</p></li>
 <li><p><strong>resolution</strong> (<em>int</em>) – the number of points to compute the density. Higher resolution leads to a more accurate plot, but also requires more computation.</p></li>
@@ -363,7 +361,7 @@ tensor: the computed standard deviation, array [batch_size] or array [] dependin
 <dd class="field-even"><p>the ax on which the plot is made.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>axes</p>
+<dd class="field-odd"><p>matplotlib.axes.Axes</p>
 </dd>
 </dl>
 </dd></dl>
@@ -375,7 +373,7 @@ tensor: the computed standard deviation, array [batch_size] or array [] dependin
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>predictions</strong> (<em>distribution</em>) – a batch of distribution predictions.</p></li>
-<li><p><strong>labels</strong> (<em>tensor</em>) – the labels, an array [batch_size], if not provided then no label will be plotted.</p></li>
+<li><p><strong>labels</strong> (<em>tensor with shape</em><em> [</em><em>batch_size</em><em>]</em>) – the true labels. If None the true labels are not plotted.</p></li>
 <li><p><strong>ax</strong> (<em>axes</em>) – the axes to plot the figure on, if None automatically creates a figure with recommended size.</p></li>
 <li><p><strong>max_count</strong> (<em>int</em>) – the maximum number of CDFs to plot.</p></li>
 <li><p><strong>resolution</strong> (<em>int</em>) – the number of points to compute the density. Higher resolution leads to a more accurate plot, but also requires more computation.</p></li>
@@ -385,7 +383,7 @@ tensor: the computed standard deviation, array [batch_size] or array [] dependin
 <dd class="field-even"><p>the ax on which the plot is made.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>axes</p>
+<dd class="field-odd"><p>matplotlib.axes.Axes</p>
 </dd>
 </dl>
 </dd></dl>
@@ -398,7 +396,7 @@ tensor: the computed standard deviation, array [batch_size] or array [] dependin
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>predictions</strong> (<em>distribution</em>) – a batch of distribution predictions.</p></li>
-<li><p><strong>labels</strong> (<em>tensor</em>) – the labels, if None then the labels are not plotted.</p></li>
+<li><p><strong>labels</strong> (<em>tensor with shape</em><em> [</em><em>batch_size</em><em>]</em>) – the true labels. If None the true labels are not plotted.</p></li>
 <li><p><strong>ax</strong> (<em>axes</em>) – the axes to plot the figure on, if None automatically creates a figure with recommended size.</p></li>
 <li><p><strong>max_count</strong> (<em>int</em>) – the maximum number of PDFs to plot.</p></li>
 <li><p><strong>resolution</strong> (<em>int</em>) – the number of points to compute the density. Higher resolution leads to a more accurate plot, but also requires more computation.</p></li>
@@ -406,10 +404,10 @@ tensor: the computed standard deviation, array [batch_size] or array [] dependin
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the ax on which the plot is made, it is an instance of matplotlib.axes.Axes.</p>
+<dd class="field-even"><p>the ax on which the plot is made.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>axes</p>
+<dd class="field-odd"><p>matplotlib.axes.Axes</p>
 </dd>
 </dl>
 </dd></dl>
@@ -421,7 +419,7 @@ tensor: the computed standard deviation, array [batch_size] or array [] dependin
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>predictions</strong> (<em>distribution</em>) – a batch of distribution predictions.</p></li>
-<li><p><strong>labels</strong> (<em>tensor</em>) – the labels, an array [batch_size].</p></li>
+<li><p><strong>labels</strong> (<em>tensor with shape</em><em> [</em><em>batch_size</em><em>]</em>) – the true labels. If None the true labels are not plotted.</p></li>
 <li><p><strong>ax</strong> (<em>axes</em>) – optional matplotlib.axes.Axes, the axes to plot the figure on. If None, automatically creates a figure with recommended size.</p></li>
 <li><p><strong>max_count</strong> (<em>int</em>) – the maximum number of CDFs to plot.</p></li>
 <li><p><strong>resolution</strong> (<em>int</em>) – the number of points to compute the density. Higher resolution leads to a more accurate plot, but also requires more computation.</p></li>
@@ -431,7 +429,7 @@ tensor: the computed standard deviation, array [batch_size] or array [] dependin
 <dd class="field-even"><p>the ax on which the plot is made.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>axes</p>
+<dd class="field-odd"><p>matplotlib.axes.Axes</p>
 </dd>
 </dl>
 </dd></dl>
@@ -443,15 +441,15 @@ tensor: the computed standard deviation, array [batch_size] or array [] dependin
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>predictions</strong> (<em>distribution</em>) – a batch of distribution predictions.</p></li>
-<li><p><strong>labels</strong> (<em>tensor</em>) – the labels, array [batch_size].</p></li>
+<li><p><strong>labels</strong> (<em>tensor with shape</em><em> [</em><em>batch_size</em><em>]</em>) – the true labels.</p></li>
 <li><p><strong>ax</strong> (<em>axes</em>) – optional matplotlib.axes.Axes, the axes to plot the figure on. If None, automatically creates a figure with recommended size.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>the ax on which the plot is made, it is an instance of matplotlib.axes.Axes.</p>
+<dd class="field-even"><p>the ax on which the plot is made.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>axes</p>
+<dd class="field-odd"><p>matplotlib.axes.Axes</p>
 </dd>
 </dl>
 </dd></dl>
